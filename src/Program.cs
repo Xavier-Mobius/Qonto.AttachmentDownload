@@ -58,7 +58,8 @@ static async Task Main(string? login, string? secreteKey, string? iban, string? 
     var attachments = await client.GetNewAttachmentsSinceAsync(lastExecution, iban, cancellationToken);
     await QontoClient.DownloadAttachmentsAsync(attachments, directory, cancellationToken);
 
-    SetLastExecution();
+    if (attachments.Any())
+        SetLastExecution();
 }
 
 static DateTime GetMinDateForQonto() => DateTime.MinValue.AddYears(2016);
